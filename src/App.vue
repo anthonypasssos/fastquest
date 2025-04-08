@@ -5,7 +5,18 @@ import NavBar from './components/NavBar.vue'
 
 <template>
   <NavBar />
-  <RouterView />
+  <section>
+    <RouterView />
+  </section>
 </template>
 
-<style></style>
+<style scoped>
+section {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100vh;
+  padding: 0 3vw;
+}
+</style>

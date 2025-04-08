@@ -21,7 +21,7 @@ header {
   align-items: center;
 
   height: 100vh;
-  width: 20%;
+  width: 18%;
 
   background: rgb(5, 20, 39);
   background: linear-gradient(
