@@ -67,7 +67,7 @@ header {
 }
 
 .input_box button img {
-  width: 80%;
+  width: 70%;
 }
 
 header ul {
