@@ -5,10 +5,10 @@
     <img src="/public/imgs/flashquest_logo.png" alt="" />
     <nav>
       <ul>
-        <li>Home</li>
-        <li>Questões</li>
-        <li>Pastas</li>
-        <li>Criar</li>
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/search">Questões</router-link></li>
+        <li><router-link to="/">Pasta</router-link></li>
+        <li><router-link to="/">Criar</router-link></li>
       </ul>
     </nav>
   </header>
@@ -49,9 +49,12 @@ nav {
 }
 
 nav ul li {
-  font-size: 1.3rem;
-  color: #d9d9d9;
   border-bottom: 1px solid #b5a7aa;
   padding: 1.5vh 0;
+}
+
+a {
+  font-size: 1.3rem;
+  color: #d9d9d9;
 }
 </style>

@@ -23,9 +23,11 @@ import TheHeader from '@/components/TheHeader.vue';
         <img src="/public/imgs/home/img_2.png" alt="">
       </section>
     </div>
-    <ListItem />
-    <ListItem />
-    <ListItem />
+    <ul>
+      <li><ListItem/></li>
+      <li><ListItem/></li>
+      <li><ListItem/></li>
+    </ul>
   </main>
 </template>
 
@@ -124,6 +126,12 @@ section {
   right: 2%;
 
   height: 100%;
+}
+
+ul {
+  display: flex;
+  justify-content: space-around;
+  grid-column: 1 / -1;
 }
 
 </style>

@@ -25,3 +25,7 @@ li {
   filter: drop-shadow(4px 4px 10px #8b8b8b);
   padding: 2%;
 }
+
+a {
+  text-decoration: none;
+}

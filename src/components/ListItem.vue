@@ -12,7 +12,7 @@
     justify-content: center;
     align-items: center;
 
-    width: 100%;
+    width: fit-content;
     height: 100%;
   }
 

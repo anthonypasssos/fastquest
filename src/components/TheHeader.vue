@@ -1,10 +1,19 @@
+<script setup lang="ts">
+defineProps<{
+  hideSearch?: boolean // O '?' torna a prop opcional
+}>()
+</script>
+
 <template>
   <header>
-    <div class="input_box">
+    <div class="input_box" v-if="!hideSearch">
       <input type="text" placeholder="Pesquise pastas e perguntas">
       <button>
         <img src="/public/imgs/header/search_icon.svg" alt="">
       </button>
+    </div>
+    <div v-if="hideSearch">
+      <slot></slot>
     </div>
     <ul>
       <li><img src="/public/imgs/header/config_icon.svg" alt=""></li>

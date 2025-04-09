@@ -17,6 +17,12 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/SearchView.vue'),
     },
+    {
+      path: '/question/:id',
+      name: 'question',
+      component: () => import('../views/QuestionView.vue'),
+      props: true
+    },
   ],
 })
 
