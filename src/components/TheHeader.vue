@@ -9,7 +9,7 @@ defineProps<{
     <div class="input_box" v-if="!hideSearch">
       <input type="text" placeholder="Pesquise pastas e perguntas">
       <button>
-        <img src="/public/imgs/header/search_icon.svg" alt="">
+        <router-link to="/search"><img src="/public/imgs/header/search_icon.svg" alt=""></router-link>
       </button>
     </div>
     <div v-if="hideSearch">
