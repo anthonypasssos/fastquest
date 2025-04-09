@@ -21,19 +21,19 @@ header {
   align-items: center;
 
   height: 100vh;
-  width: 18%;
+  width: 23%;
 
   background: rgb(5, 20, 39);
   background: linear-gradient(
     180deg,
-    rgba(5, 20, 39, 1) 0%,
-    rgba(84, 13, 27, 1) 51%,
-    rgba(167, 66, 35, 1) 100%
+    #051427 0%,
+    #540D1B 51%,
+    #A74223 100%
   );
 }
 
 img {
-  width: 60%;
+  width: 50%;
   margin: 10% 0;
 }
 
@@ -41,7 +41,6 @@ li {
   display: flex;
   justify-content: center;
   list-style: none;
-  padding: 15px 0;
 }
 
 nav {
@@ -50,8 +49,9 @@ nav {
 }
 
 nav ul li {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #d9d9d9;
   border-bottom: 1px solid #b5a7aa;
+  padding: 1.5vh 0;
 }
 </style>

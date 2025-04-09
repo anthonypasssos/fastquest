@@ -17,6 +17,6 @@ section {
 
   width: 100%;
   height: 100vh;
-  padding: 0 3vw;
+  padding: 0 5vw;
 }
 </style>
