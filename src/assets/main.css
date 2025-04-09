@@ -17,3 +17,11 @@
 li {
   list-style: none;
 }
+
+.classic-box {
+  background-color: #F4F4F4;
+  border: .5px solid #979494;
+  border-radius: 20px;
+  filter: drop-shadow(4px 4px 10px #8b8b8b);
+  padding: 2%;
+}
