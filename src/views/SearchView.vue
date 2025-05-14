@@ -28,7 +28,7 @@ const questions = ref<QuestionResponse | null>(null)
 
 onMounted(async () => {
   try {
-    const res = await fetch('http://localhost:8080/questions')
+    const res = await fetch('https://fastquest-backend-production.up.railway.app/questions')
     const data = await res.json() as QuestionResponse
     questions.value = data
   } catch (err) {

@@ -32,7 +32,7 @@ const fetchQuestion = async (id: string | number) => {
   error.value = null
 
   try {
-    const res = await fetch(`http://localhost:8080/question/${id}`)
+    const res = await fetch(`https://fastquest-backend-production.up.railway.app/question/${id}`)
     if (!res.ok) throw new Error(`Erro ao buscar questão: ${res.status}`)
     const data: Question = await res.json()
     question.value = data
@@ -46,7 +46,7 @@ const fetchQuestion = async (id: string | number) => {
 
 const fetchAnswers = async (questionId: number) => {
   try {
-    const res = await fetch(`http://localhost:8080/questions/${questionId}/answers`)
+    const res = await fetch(`https://fastquest-backend-production.up.railway.app/questions/${questionId}/answers`)
     if (!res.ok) throw new Error(`Erro ao buscar respostas: ${res.status}`)
     const data: Answer[] = await res.json()
     answers.value = data
