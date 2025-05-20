@@ -28,7 +28,7 @@ const questions = ref<QuestionResponse | null>(null)
 
 onMounted(async () => {
   try {
-    const res = await fetch('https://fastquest-backend-production.up.railway.app/questions')
+    const res = await fetch('https://fastquest-backend-production.up.railway.app/questions?page=1&limit=3')
     const data = await res.json() as QuestionResponse
     questions.value = data
   } catch (err) {
@@ -40,9 +40,9 @@ onMounted(async () => {
 
 <template>
   <TheHeader />
-  <main>
+  <main class="grid gap-10 h-full w-full overflow-hidden">
     <div class="questions-box">
-        <ul v-if="questions">
+        <ul class="flex flex-col gap-5 h-full" v-if="questions">
           <li
             v-for="(question, index) in questions.data"
             :key="question.ID"
@@ -54,7 +54,7 @@ onMounted(async () => {
 
         <p v-else>Carregando questões...</p>
     </div>
-    <div class="filter-box">
+    <div class="filter-box h-full">
 
     </div>
   </main>
@@ -62,20 +62,8 @@ onMounted(async () => {
 
 <style scoped>
 main {
-  display: grid;
   grid-template-columns: 3fr 1fr;
-  gap: 2%;
-  height: auto;
-  width: 100%;
   padding: 3vh 0;
-  overflow-y: hidden;
-}
-
-ul {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  height: 100%;
 }
 
 ul li, a {
@@ -86,7 +74,6 @@ ul li, a {
 }
 
 .filter-box {
-  height: 100%;
   background-color: #F4F4F4;
   border: .5px solid #979494;
 }
