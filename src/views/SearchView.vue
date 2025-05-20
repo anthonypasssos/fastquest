@@ -41,33 +41,41 @@ onMounted(async () => {
 <template>
   <TheHeader />
   <main>
-    <ul v-if="questions">
-      <li
-        v-for="(question, index) in questions.data"
-        :key="question.ID"
-        class="classic-box"
-      >
-        <router-link :to="'/question/' + question.ID">{{ index + 1 }}. {{ question.Statement }}</router-link>
-      </li>
-    </ul>
+    <div class="questions-box">
+        <ul v-if="questions">
+          <li
+            v-for="(question, index) in questions.data"
+            :key="question.ID"
+            class="classic-box"
+          >
+            <router-link :to="'/question/' + question.ID">{{ index + 1 }}. {{ question.Statement }}</router-link>
+          </li>
+        </ul>
 
-    <p v-else>Carregando questões...</p>
+        <p v-else>Carregando questões...</p>
+    </div>
+    <div class="filter-box">
+
+    </div>
   </main>
 </template>
 
 <style scoped>
 main {
-  height: 92vh;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2%;
+  height: auto;
   width: 100%;
   padding: 3vh 0;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 ul {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 100%;
+  height: 100%;
 }
 
 ul li, a {
@@ -75,5 +83,11 @@ ul li, a {
   font-size: 1.4rem;
   font-weight: 300;
   line-height: 1;
+}
+
+.filter-box {
+  height: 100%;
+  background-color: #F4F4F4;
+  border: .5px solid #979494;
 }
 </style>

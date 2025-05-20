@@ -27,7 +27,7 @@ header {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 8vh;
+  height: 10vh;
 }
 
 .input_box {
@@ -35,7 +35,7 @@ header {
   align-items: center;
   height: 100%;
   width: 60%;
-  padding: 1.3vh 0;
+  padding: 2vh 0;
   gap: 10px;
   filter: drop-shadow(4px 4px 10px #8b8b8b);
 }
