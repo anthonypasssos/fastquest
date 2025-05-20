@@ -46,15 +46,21 @@ onMounted(async () => {
           <li
             v-for="(question, index) in questions.data"
             :key="question.ID"
-            class="classic-box"
+            class="classic-box flex overflow-hidden h-1/5 w-full"
           >
-            <router-link :to="'/question/' + question.ID">{{ index + 1 }}. {{ question.Statement }}</router-link>
+            <ul class="bg-header text-white flex flex-col justify-around w-2/4 p-5 text-xl">
+              <li>Criador: Joãozinho123</li>
+              <li>Fonte: OAB</li>
+              <li>Data: 2024</li>
+              <li>Disciplina: Penal</li>
+            </ul>
+            <router-link class="text-black w-full text-xl" :to="'/question/' + question.ID">{{ question.Statement }}</router-link>
           </li>
         </ul>
 
         <p v-else>Carregando questões...</p>
     </div>
-    <div class="filter-box h-full">
+    <div class="classic-box h-full">
 
     </div>
   </main>
@@ -67,14 +73,15 @@ main {
 }
 
 ul li, a {
-  color: black;
-  font-size: 1.4rem;
   font-weight: 300;
   line-height: 1;
 }
 
-.filter-box {
-  background-color: #F4F4F4;
-  border: .5px solid #979494;
+.bg-header {
+  background: linear-gradient(
+    180deg,
+    #1D3F69 0%,
+    #6686AF 100%
+  );
 }
 </style>

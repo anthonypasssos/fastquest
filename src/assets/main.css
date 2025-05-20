@@ -4,7 +4,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 
 * {
-  padding: 0;
   font-family: 'Josefin Sans', sans-serif;
   font-style: normal;
 }
@@ -24,7 +23,15 @@ li {
   border: .5px solid #979494;
   border-radius: 20px;
   filter: drop-shadow(4px 4px 10px #b0b0b0);
-  padding: 2%;
+}
+
+.bg-main {
+  background: linear-gradient(
+    180deg,
+    rgba(5, 20, 39, 1) 0%,
+    rgba(84, 13, 27, 1) 51%,
+    rgba(167, 66, 35, 1) 100%
+  );
 }
 
 a {
