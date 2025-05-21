@@ -4,7 +4,7 @@
   <header>
     <img src="/public/imgs/flashquest_logo.png" alt="" />
     <nav>
-      <ul>
+      <ul class="flex flex-col">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/search">Questões</router-link></li>
         <li><router-link to="/">Pasta</router-link></li>
@@ -41,6 +41,7 @@ li {
   display: flex;
   justify-content: center;
   list-style: none;
+  width: 100%;
 }
 
 nav {

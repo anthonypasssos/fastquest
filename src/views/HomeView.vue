@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import ListItem from '@/components/ListItem.vue';
-import TheHeader from '@/components/TheHeader.vue';
 
 </script>
 
 <template>
-  <TheHeader />
   <main>
     <div class="main-content">
       <section class="main-section">

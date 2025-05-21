@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 @import './base.css';
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 
 * {
   font-family: 'Josefin Sans', sans-serif;
@@ -21,7 +21,6 @@ li {
 .classic-box {
   background-color: #F4F4F4;
   border: .5px solid #979494;
-  border-radius: 20px;
   filter: drop-shadow(4px 4px 10px #b0b0b0);
 }
 
@@ -32,6 +31,23 @@ li {
     rgba(84, 13, 27, 1) 51%,
     rgba(167, 66, 35, 1) 100%
   );
+}
+
+.bg-main-h {
+  background: linear-gradient(
+    270deg,
+    rgba(5, 20, 39, 1) 0%,
+    rgba(84, 13, 27, 1) 63%,
+    rgba(167, 66, 35, 1) 96%
+  );
+}
+
+.text-phc {
+  color: #acacac;
+}
+
+.text-ph::placeholder {
+  color: #acacac;
 }
 
 a {
