@@ -1,6 +1,6 @@
 <template>
   <div class="input_box">
-      <input class="text-ph" type="text" placeholder="Pesquise pastas e perguntas">
+      <input class="text-ph text-black" type="text" placeholder="Pesquise pastas e perguntas">
       <button>
         <router-link to="/search" class="flex justify-center"><img src="/public/imgs/header/search_icon.svg" alt=""></router-link>
       </button>

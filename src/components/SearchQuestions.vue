@@ -43,7 +43,7 @@ onMounted(async () => {
     // Tratar todos os Statements antes de jogar no estado
     data.data = data.data.map(q => ({
       ...q,
-      Statement: limitWords(q.Statement, 50)
+      Statement: limitWords(q.Statement, 80)
     }))
 
     questions.value = data
@@ -59,7 +59,7 @@ onMounted(async () => {
           <li
             v-for="(question) in questions.data"
             :key="question.ID"
-            class="classic-box flex items-center h-1/3 w-full overflow-hidden pr-5 rounded-2xl hover:cursor-pointer"
+            class="classic-box flex items-center h-1/3 w-full overflow-hidden pr-5 rounded-2xl hover:cursor-pointer "
           >
             <ul class="bg-header text-white flex flex-col justify-around h-full w-2/5 p-5 text-lg">
               <li>Criador: Joãozinho123</li>
@@ -67,7 +67,7 @@ onMounted(async () => {
               <li>Data: 2024</li>
               <li>Disciplina: Penal</li>
             </ul>
-            <router-link class="text-black w-full p-4 text-lg" :to="'/question/' + question.ID">{{ question.Statement }}</router-link>
+            <router-link class="text-black w-full p-4 text-xl" :to="'/question/' + question.ID">{{ question.Statement }}</router-link>
           </li>
         </ul>
 
