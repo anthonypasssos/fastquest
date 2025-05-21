@@ -59,7 +59,7 @@ onMounted(async () => {
           <li
             v-for="(question) in questions.data"
             :key="question.ID"
-            class="classic-box flex items-center h-1/3 w-full overflow-hidden pr-5 rounded-2xl"
+            class="classic-box flex items-center h-1/3 w-full overflow-hidden pr-5 rounded-2xl hover:cursor-pointer"
           >
             <ul class="bg-header text-white flex flex-col justify-around h-full w-2/5 p-5 text-lg">
               <li>Criador: Joãozinho123</li>

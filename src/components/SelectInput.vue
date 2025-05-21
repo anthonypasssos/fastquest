@@ -5,16 +5,24 @@ defineProps({
 </script>
 
 <template>
-  <div class="classic-box w-11/12 text-phc flex justify-between items-center h-1/12 overflow-hidden pl-3 rounded-xl">
+  <div class="w-11/12 flex justify-between items-center overflow-hidden pl-3 rounded-xl">
       <p class="text-xl">{{ placeholder }}</p>
-      <button class="bg-main h-full p-1.5">
+      <button class="bg-main h-12 p-1.5">
         <img class="h-full" src="/public/imgs/arrow.png" alt="">
       </button>
     </div>
 </template>
 
 <style scoped>
+  div {
+    border: .5px solid #BFBFBF;
+  }
+
   div:hover {
     cursor: pointer;
+  }
+
+  p {
+    color: #C5C5C5;
   }
 </style>
