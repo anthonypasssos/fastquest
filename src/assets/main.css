@@ -53,3 +53,31 @@ li {
 a {
   text-decoration: none;
 }
+
+html {
+  font-size: 16px; /* Base: telas médias (ex: 768px) */
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px; /* Telas pequenas: celular */
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 17px; /* Telas grandes: notebook */
+  }
+}
+
+@media (min-width: 1440px) {
+  html {
+    font-size: 18px; /* Telas muito grandes: desktop grande */
+  }
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 19px; /* Telas ultra-wide */
+  }
+}

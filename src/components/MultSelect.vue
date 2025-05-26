@@ -1,12 +1,12 @@
 <template>
-  <div class="topic classic-box w-11/12 h-1/5 rounded-xl flex justify-center flex-col p-2">
+  <div class="topic classic-box w-11/12 h-4/12 rounded-xl flex justify-center flex-col p-2">
       <div class="w-full h-fit rounded-xl pl-3 py-1">
-        <p class="text-xl">Assunto</p>
+        <p>Assunto</p>
       </div>
       <ul class="w-full h-full flex py-2 gap-2">
         <li class="rounded-xl flex items-center h-fit py-1 px-1.5 gap-2">
-          <p class="text-white text-lg leading-none align-middle text-center">Cachorro</p>
-          <img src="/public/imgs/close.png" class="h-6 hover:cursor-pointer" alt="">
+          <p class="text-white leading-none h-full">Cachorro</p>
+          <img src="/public/imgs/close.png" class="h-4 hover:cursor-pointer" alt="">
         </li>
       </ul>
     </div>

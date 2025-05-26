@@ -1,6 +1,24 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const inputText = ref<string>('')
+
+const emit = defineEmits<{
+  (e: 'input', value: string): void
+}>()
+
+const handleInput = () => {
+  emit('input', inputText.value)
+}
+</script>
+
 <template>
   <div class="input_box">
-      <input class="text-ph text-black" type="text" placeholder="Pesquise pastas e perguntas">
+      <input
+        class="text-ph text-black" type="text" placeholder="Pesquise pastas e perguntas"
+        v-model="inputText"
+        @input="handleInput"
+        >
       <button>
         <router-link to="/search" class="flex justify-center"><img src="/public/imgs/header/search_icon.svg" alt=""></router-link>
       </button>
@@ -20,7 +38,7 @@
 
 .input_box input {
   width: 100%;
-  font-size: 1.3rem;
+  font-size: 1rem;
   height: 100%;
   border: 1px solid #979494;
   padding-left: 1rem;
