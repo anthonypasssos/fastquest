@@ -7,8 +7,27 @@ const emit = defineEmits<{
   (e: 'input', value: string): void
 }>()
 
+// Função debounce genérica
+function debounce<T extends (...args: any[]) => void>(fn: T, delay: number) {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null
+  return (...args: Parameters<T>) => {
+    if (timeoutId) clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => {
+      fn(...args)
+    }, delay)
+  }
+}
+
+// Função que emite o evento
+function emitInput(value: string) {
+  emit('input', value)
+}
+
+// Versão com debounce da função de emitir
+const debouncedEmitInput = debounce(emitInput, 500)
+
 const handleInput = () => {
-  emit('input', inputText.value)
+  debouncedEmitInput(inputText.value)
 }
 </script>
 
