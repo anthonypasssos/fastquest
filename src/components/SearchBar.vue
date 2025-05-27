@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router';
 
 const inputText = ref<string>('')
 
@@ -11,6 +12,12 @@ const emit = defineEmits<{
 const handleInput = () => {
   emit('input', inputText.value)
 }
+
+const route = useRoute();
+
+onMounted(() => {
+  inputText.value = (route.query.statement as string) ?? ""
+})
 </script>
 
 <template>
