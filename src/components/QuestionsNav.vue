@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 interface Pagination {
   current_page: number
@@ -49,9 +50,16 @@ const pagesToShow = computed(() => {
   return pages
 })
 
+const route = useRoute();
+const router = useRouter();
+
 function goToPage(page: number) {
-  if (page < 1 || page > localPagination.value.last_page || page === currentPage.value) return
-  // Emita evento se quiser notificar o pai aqui
+  router.push({
+    query: {
+      ...route.query,
+      page: page
+    }
+  })
 }
 
 function goToPreviousPage() {
@@ -66,9 +74,9 @@ function goToNextPage() {
 
 <template>
   <div class="h-14 py-2 flex justify-between items-center">
-      <span class="bg-main flex p-1 rounded-xl h-full">
+      <button @click="goToPreviousPage" class="bg-main flex p-1 rounded-xl h-full hover:cursor-pointer">
         <img class="h-full rotate-90" src="/public/imgs/arrow.png" alt="">
-      </span>
+      </button>
 
       <ul class="flex items-center gap-1 h-full">
         <li
@@ -80,21 +88,21 @@ function goToNextPage() {
             v-if="num === '...'"
             class="px-2 text-gray-500"
           >...</span>
-          <router-link
+          <button
             v-else
-            :to="'/search?page=' + num"
+            @click="goToPage(Number(num))"
             :class="[
               'flex justify-center items-center p-0.5 h-5/6 text-shadow-lg px-3 rounded-xl leading-0 hover:cursor-pointer',
               currentPage === num ? 'bg-main text-white' : 'classic-box text-black'
             ]"
           >
             {{ num }}
-          </router-link>
+          </button>
         </li>
       </ul>
 
-      <span class="bg-main flex p-1 rounded-xl h-full">
+      <button @click="goToNextPage" class="bg-main flex p-1 rounded-xl h-full hover:cursor-pointer">
         <img class="h-full -rotate-90" src="/public/imgs/arrow.png" alt="">
-      </span>
+      </button>
     </div>
 </template>

@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import QuestionsNav from '@/components/QuestionsNav.vue'
 import { ref, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
-const props = defineProps({
-  page: Number,
-  statement: String,
-  limit: Number
-})
+const route = useRoute();
 
 interface Question {
   ID: number
@@ -47,13 +44,13 @@ function debounce<T extends (...args: any[]) => void>(fn: T, delay: number) {
 
 const fetchQuestions = async () => {
   const query = new URLSearchParams({
-    page: String(props.page ?? 1),
-    statement: props.statement ?? '',
-    limit: String(props.limit ?? 10)
-  })
+    ...route.query,
+    limit: "3"
+  });
 
   try {
     const res = await fetch(`https://fastquest-backend-production.up.railway.app/questions?${query}`)
+    console.log(res);
     const data = await res.json() as QuestionResponse
 
     data.data = data.data.map(q => ({
@@ -69,8 +66,10 @@ const fetchQuestions = async () => {
 
 const debouncedFetch = debounce(fetchQuestions, 500)
 
-onMounted(fetchQuestions)
-watch(() => props.statement, debouncedFetch)
+onMounted(fetchQuestions);
+watch(() => route.fullPath, () => {
+  debouncedFetch();
+})
 </script>
 
 <template>
