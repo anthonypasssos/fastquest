@@ -33,7 +33,7 @@ onMounted(() => {
       ]"
       @click="openSelects"
       >
-        <p class="ph-color">{{ label }}</p>
+        <p :class="label === props.placeholder ?  'ph-color' : 'text-black'">{{ label }}</p>
         <span class="bg-main h-8 p-1.5">
           <img :class="['h-full', isOpen ? 'rotate-180' : '']" src="/public/imgs/arrow.png" alt="">
         </span>

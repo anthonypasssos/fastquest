@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ListItem from '@/components/ListItem.vue';
-import TheHeader from '@/components/TheHeader.vue';
+import ActionBtns from '@/components/ActionBtns.vue';
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -16,7 +16,7 @@ type Question = {
 
 type Answer = {
   ID: number
-  Answer: string
+  Text: string
   Is_correct: boolean
   QuestionID: number
 }
@@ -46,7 +46,7 @@ const fetchQuestion = async (id: string | number) => {
 
 const fetchAnswers = async (questionId: number) => {
   try {
-    const res = await fetch(`https://fastquest-backend-production.up.railway.app/questions/${questionId}/answers`)
+    const res = await fetch(`https://fastquest-backend-production.up.railway.app/question/${questionId}/answers`)
     if (!res.ok) throw new Error(`Erro ao buscar respostas: ${res.status}`)
     const data: Answer[] = await res.json()
     answers.value = data
@@ -65,29 +65,20 @@ watch(() => route.params.id, (newId) => {
 </script>
 
 <template>
-  <TheHeader />
-  <main>
-    <div class="question-box classic-box">
-      <p>{{ question?.Statement }}</p>
-      <ul>
-        <li v-for="(answer, i) in answers" :key="answer.ID">
-          {{ ["a", "b", "c", "d"][i] + ") " + answer.Answer }}
+  <main class="h-screen w-full">
+    <header></header>
+    <ActionBtns />
+    <div class="question-box overflow-y-scroll overflow-x-visible gap-10">
+      <p class="classic-box rounded-3xl  p-7 text-lg font-light">{{ question?.Statement }}</p>
+      <ul class="flex flex-col gap-5">
+        <li class="flex items-center gap-3 classic-box rounded-3xl p-3" v-for="(answer, i) in answers" :key="answer.ID">
+          <span class="gradient-border rounded-xl leading-0.5 align-middle h-1/2 aspect-square flex justify-center items-center text-xl">{{ ["A", "B", "C", "D"][i] }}</span>
+          <p class="font-light text-lg">{{ answer.Text }}</p>
           <span v-if="answer.Is_correct"> ✅</span>
         </li>
       </ul>
     </div>
     <div class="note-box classic-box"></div>
-    <ul class="list-items">
-      <li>
-        <ListItem />
-      </li>
-      <li>
-        <ListItem />
-      </li>
-      <li>
-        <ListItem />
-      </li>
-    </ul>
   </main>
 </template>
 
@@ -98,44 +89,22 @@ p,li {
 
 main {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1.4fr;
-  grid-template-rows: 1fr 1fr 30vh;
+  grid-template-columns: 3.5fr 1fr;
+  grid-template-rows: 9vh auto;
   gap: 4%;
 
-  height: 92vh;
-  width: 100%;
   padding: 3vh 0;
 }
 
 .question-box {
   display: flex;
-  padding: 25px;
   flex-direction: column;
-  grid-column: 1 / 4;
-  grid-row: 1 / 3;
 }
 
-.question-box p {
-  margin-bottom: 20px;
-  font-size: 1.2rem;
+.gradient-border {
+  border: 3px solid transparent;
+  background: linear-gradient(white, white) padding-box, /* fundo do conteúdo */
+              linear-gradient(180deg, #051427, #540D1B, #A74223) border-box; /* borda gradient */
 }
 
-.question-box li {
-  margin: 20px 0;
-}
-
-.note-box {
-  grid-row: 1 / 4;
-}
-
-.list-items {
-  grid-column: 1 / 4;
-  display: flex;
-  justify-content: space-around;
-}
-
-.list-items li {
-  height: 100%;
-  width: fit-content;
-}
 </style>
