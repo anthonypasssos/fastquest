@@ -3,27 +3,10 @@ import ListItem from '@/components/ListItem.vue';
 import ActionBtns from '@/components/ActionBtns.vue';
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-
-type Question = {
-  ID: number
-  CreatedAt: string
-  UpdatedAt: string
-  Statement: string
-  Subject: number
-  SubjectID: number
-  UserID: number
-}
-
-type Answer = {
-  ID: number
-  Text: string
-  Is_correct: boolean
-  QuestionID: number
-}
+import type { DetailQuestion } from '@/models/DetailQuestion.ts';
 
 const route = useRoute()
-const question = ref<Question | null>(null)
-const answers = ref<Answer[]>([])
+const question = ref<DetailQuestion | null>(null)
 const loading = ref(true)
 const error = ref<string | null>(null)
 
@@ -32,26 +15,15 @@ const fetchQuestion = async (id: string | number) => {
   error.value = null
 
   try {
-    const res = await fetch(`https://fastquest-backend-production.up.railway.app/question/${id}`)
+    const res = await fetch(`https://fastquest-backend-production.up.railway.app/question/${id}?detail=full`)
     if (!res.ok) throw new Error(`Erro ao buscar questão: ${res.status}`)
-    const data: Question = await res.json()
+    const data: DetailQuestion = await res.json()
     question.value = data
-    fetchAnswers(data.ID)
+    console.log(question.value)
   } catch (err: any) {
     error.value = err.message
   } finally {
     loading.value = false
-  }
-}
-
-const fetchAnswers = async (questionId: number) => {
-  try {
-    const res = await fetch(`https://fastquest-backend-production.up.railway.app/question/${questionId}/answers`)
-    if (!res.ok) throw new Error(`Erro ao buscar respostas: ${res.status}`)
-    const data: Answer[] = await res.json()
-    answers.value = data
-  } catch (err: any) {
-    error.value = `Erro ao buscar alternativas: ${err.message}`
   }
 }
 
@@ -65,27 +37,57 @@ watch(() => route.params.id, (newId) => {
 </script>
 
 <template>
-  <main class="h-screen w-full">
-    <header></header>
+  <main class="h-screen w-full overflow-visible">
+    <header class="w-full h-full flex items-center justify-between">
+      <div class="flex gap-3 h-full w-fit items-center">
+        <h1 class="text-black text-3xl leading-none align-middle p-0 m-0 inline">Questão #{{ question?.id }}</h1>
+        <img class="h-1/3" src="/public/imgs/save.svg" alt="">
+      </div>
+      <ul class="flex">
+        <li v-for="n in 5" :key="n">
+          <img src="/public/imgs/star_full.svg" alt="">
+        </li>
+      </ul>
+    </header>
     <ActionBtns />
-    <div class="question-box overflow-y-scroll overflow-x-visible gap-10">
-      <p class="classic-box rounded-3xl  p-7 text-lg font-light">{{ question?.Statement }}</p>
+    <section class="question-box overflow-y-scroll overflow-x-visible gap-10">
+      <p class="classic-box rounded-3xl  p-7 text-lg font-light text-black">{{ question?.statement }}</p>
       <ul class="flex flex-col gap-5">
-        <li class="flex items-center gap-3 classic-box rounded-3xl p-3" v-for="(answer, i) in answers" :key="answer.ID">
-          <span class="gradient-border rounded-xl leading-0.5 align-middle h-1/2 aspect-square flex justify-center items-center text-xl">{{ ["A", "B", "C", "D"][i] }}</span>
-          <p class="font-light text-lg">{{ answer.Text }}</p>
+        <li class="flex items-center gap-3 classic-box rounded-3xl p-3" v-for="(answer, i) in question?.answers" :key="answer.ID">
+          <span class="gradient-border rounded-xl leading-0.5 align-middle h-10 aspect-square flex justify-center items-center text-xl text-black">{{ ["A", "B", "C", "D"][i] }}</span>
+          <p class="font-light text-lg text-black">{{ answer.Text }}</p>
           <span v-if="answer.Is_correct"> ✅</span>
         </li>
       </ul>
-    </div>
-    <div class="note-box classic-box"></div>
+    </section>
+    <section class="flex flex-col items-center rounded-2xl overflow-hidden">
+      <h1 class="bg-main text-white text-center text-xl p-3 w-full">Informações</h1>
+      <div class="classic-box h-full w-full rounded-b-2xl">
+        <ul class="text-lg p-5 flex flex-col items-center gap-2 text-black">
+          <li class="w-full">Criador: {{ question?.user.name }}</li>
+          <hr class="border-main w-5/6">
+          <li class="w-full">Fonte: {{ question?.source.Type }}</li>
+          <hr class="border-main w-5/6">
+          <li class="w-full">Data: {{ question?.source.Metadata.year }}</li>
+          <hr class="border-main w-5/6">
+          <li class="w-full">Disciplina: {{ question?.subject.Name }}</li>
+          <hr class="border-main w-5/6">
+          <li class="w-full">
+            <h2>Assunto: </h2>
+            <ul class="w-full h-full flex py-2 gap-2">
+              <li class="rounded-xl flex items-center h-fit py-1 px-3 gap-2 bg-topic font-light">
+                <p class="text-white leading-none h-full">Cachorro</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <button class="bg-button text-white py-3 m-4 w-full rounded-4xl text-xl hover:cursor-pointer">Ver Resposta</button>
+    </section>
   </main>
 </template>
 
 <style scoped>
-p,li {
-  color: black;
-}
 
 main {
   display: grid;
@@ -107,4 +109,11 @@ main {
               linear-gradient(180deg, #051427, #540D1B, #A74223) border-box; /* borda gradient */
 }
 
+.bg-topic {
+  background: linear-gradient(
+    90deg,
+    #6686AF 0%,
+    #1D3F69 100%
+  );
+}
 </style>
