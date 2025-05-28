@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+const route = useRoute();
+const router = useRouter();
 
 const props = defineProps({
   placeholder: String,
-  selects: Array
+  selects: Array,
+  query: String
 })
 
 const isOpen = ref<boolean>(false);
@@ -14,9 +19,16 @@ const openSelects = () => {
   isOpen.value = !isOpen.value
 }
 
-const sendSelect = (name: string) => {
-  label.value = name
+const sendSelect = (item: Record<string, any>) => {
+  label.value = item.name
   isOpen.value = false
+  router.push({
+    query: {
+      ...route.query,
+      [props.query]: item.order
+    }
+  })
+
 }
 
 onMounted(() => {
@@ -48,7 +60,7 @@ onMounted(() => {
           :key="i"
           @click="sendSelect(item)"
         >
-          {{ item }}
+          {{ item.name }}
         </li>
       </ul>
     </div>

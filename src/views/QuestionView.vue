@@ -9,6 +9,12 @@ const route = useRoute()
 const question = ref<DetailQuestion | null>(null)
 const loading = ref(true)
 const error = ref<string | null>(null)
+const showCorrect = ref(false);
+
+const answerSwitch = () => {
+  showCorrect.value = !showCorrect.value
+  console.log(showCorrect.value)
+}
 
 const fetchQuestion = async (id: string | number) => {
   loading.value = true
@@ -53,10 +59,17 @@ watch(() => route.params.id, (newId) => {
     <section class="question-box overflow-y-scroll overflow-x-visible gap-10">
       <p class="classic-box rounded-3xl  p-7 text-lg font-light text-black">{{ question?.statement }}</p>
       <ul class="flex flex-col gap-5">
-        <li class="flex items-center gap-3 classic-box rounded-3xl p-3" v-for="(answer, i) in question?.answers" :key="answer.ID">
-          <span class="gradient-border rounded-xl leading-0.5 align-middle h-10 aspect-square flex justify-center items-center text-xl text-black">{{ ["A", "B", "C", "D"][i] }}</span>
+        <li class="flex items-center gap-3 classic-box rounded-3xl p-3 relative" v-for="(answer, i) in question?.answers" :key="answer.ID">
+          <span
+            :class="[
+              'rounded-xl leading-0.5 align-middle h-10 aspect-square flex justify-center items-center text-xl',
+              showCorrect ? (answer.Is_correct ? 'correct-gradient text-white' : 'wrong-gradient text-white')  : 'gradient-border text-black'
+            ]"
+          >
+            {{ ["A", "B", "C", "D"][i] }}
+          </span>
           <p class="font-light text-lg text-black">{{ answer.Text }}</p>
-          <span v-if="answer.Is_correct"> ✅</span>
+          <img class="absolute h-5/6 max-h-16 right-0 bottom-0" src="/public/imgs/correct.svg" v-if="answer.Is_correct && showCorrect" >
         </li>
       </ul>
     </section>
@@ -64,25 +77,25 @@ watch(() => route.params.id, (newId) => {
       <h1 class="bg-main text-white text-center text-xl p-3 w-full">Informações</h1>
       <div class="classic-box h-full w-full rounded-b-2xl">
         <ul class="text-lg p-5 flex flex-col items-center gap-2 text-black">
-          <li class="w-full">Criador: {{ question?.user.name }}</li>
+          <li class="w-full">Criador: {{ question?.user?.name ?? 'indefinido'}}</li>
           <hr class="border-main w-5/6">
-          <li class="w-full">Fonte: {{ question?.source.Type }}</li>
+          <li class="w-full">Fonte: {{ question?.source?.Type ?? 'indefinido' }}</li>
           <hr class="border-main w-5/6">
-          <li class="w-full">Data: {{ question?.source.Metadata.year }}</li>
+          <li class="w-full">Data: {{ question?.source?.Metadata.year ?? 'indefinido' }}</li>
           <hr class="border-main w-5/6">
-          <li class="w-full">Disciplina: {{ question?.subject.Name }}</li>
+          <li class="w-full">Disciplina: {{ question?.subject?.Name ?? 'indefinido' }}</li>
           <hr class="border-main w-5/6">
           <li class="w-full">
             <h2>Assunto: </h2>
             <ul class="w-full h-full flex py-2 gap-2">
               <li class="rounded-xl flex items-center h-fit py-1 px-3 gap-2 bg-topic font-light">
-                <p class="text-white leading-none h-full">Cachorro</p>
+                <p class="text-white leading-none h-full">{{ question?.topic?.Name ?? 'indefinido' }}</p>
               </li>
             </ul>
           </li>
         </ul>
       </div>
-      <button class="bg-button text-white py-3 m-4 w-full rounded-4xl text-xl hover:cursor-pointer">Ver Resposta</button>
+      <button @click="answerSwitch" class="bg-button text-white py-3 m-4 w-full rounded-4xl text-xl hover:cursor-pointer">{{ showCorrect ? 'Esconder' : 'Ver Respostas' }}</button>
     </section>
   </main>
 </template>
@@ -107,6 +120,14 @@ main {
   border: 3px solid transparent;
   background: linear-gradient(white, white) padding-box, /* fundo do conteúdo */
               linear-gradient(180deg, #051427, #540D1B, #A74223) border-box; /* borda gradient */
+}
+
+.correct-gradient {
+  background: linear-gradient(180deg, #1D3F69, #6686AF);
+}
+
+.wrong-gradient {
+  background: linear-gradient(180deg, #AA4243, #540D1B);
 }
 
 .bg-topic {
