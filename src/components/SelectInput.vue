@@ -2,37 +2,50 @@
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+interface Select {
+  label: String,
+  value: String
+}
+
+interface Props {
+  placeholder: String,
+  selects: Select[],
+  query: String,
+  selectedValue: String
+}
+
+const props = defineProps<Props>()
+
 const route = useRoute();
 const router = useRouter();
 
-const props = defineProps({
-  placeholder: String,
-  selects: Array,
-  query: String
-})
 
 const isOpen = ref<boolean>(false);
 
-const label = ref<string>("");
+const selected = ref<Select>();
 
 const openSelects = () => {
   isOpen.value = !isOpen.value
 }
 
-const sendSelect = (item: Record<string, any>) => {
-  label.value = item.name
+const sendSelect = (item: Select) => {
+  selected.value = item
   isOpen.value = false
   router.push({
     query: {
       ...route.query,
-      [props.query]: item.order
+      [props.query]: item.value
     }
   })
 
 }
 
 onMounted(() => {
-  label.value = props.placeholder ?? "Valor Invalido";
+
+  selected.value = {
+    label: props.placeholder ?? "Valor Invalido",
+    value: "0"
+  }
 })
 </script>
 
@@ -45,7 +58,7 @@ onMounted(() => {
       ]"
       @click="openSelects"
       >
-        <p :class="label === props.placeholder ?  'ph-color' : 'text-black'">{{ label }}</p>
+        <p :class="selected?.label === props.placeholder ?  'ph-color' : 'text-black'">{{ selected?.label }}</p>
         <span class="bg-main h-8 p-1.5">
           <img :class="['h-full', isOpen ? 'rotate-180' : '']" src="/public/imgs/arrow.png" alt="">
         </span>
@@ -60,7 +73,7 @@ onMounted(() => {
           :key="i"
           @click="sendSelect(item)"
         >
-          {{ item.name }}
+          {{ item.label }}
         </li>
       </ul>
     </div>
