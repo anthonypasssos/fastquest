@@ -1,51 +1,42 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
 
 interface Select {
-  label: String,
-  value: String
+  label: string,
+  value: string
 }
 
 interface Props {
-  placeholder: String,
+  placeholder: string,
   selects: Select[],
-  query: String,
-  selectedValue: String
+  selectedValue: string
 }
 
 const props = defineProps<Props>()
 
-const route = useRoute();
-const router = useRouter();
-
-
 const isOpen = ref<boolean>(false);
 
-const selected = ref<Select>();
+const selected = ref<Select>({label: "", value: ""});
 
 const openSelects = () => {
   isOpen.value = !isOpen.value
 }
 
-const sendSelect = (item: Select) => {
+const emit = defineEmits<{(e: 'select', item: Select): void}>();
+
+const select = (item: Select) => {
   selected.value = item
   isOpen.value = false
-  router.push({
-    query: {
-      ...route.query,
-      [props.query]: item.value
-    }
-  })
-
+  emit('select', item);
 }
 
 onMounted(() => {
+  const encontrado = props.selects.find(item => item.value === props.selectedValue);
+  selected.value = encontrado ?? { label: props.placeholder, value: "" };
+});
 
-  selected.value = {
-    label: props.placeholder ?? "Valor Invalido",
-    value: "0"
-  }
+watch(() => props.selectedValue, (newValue: string) => {
+  selected.value = props.selects.find(item => item.value === newValue) ?? {label: props.placeholder, value: ""};
 })
 </script>
 
@@ -71,7 +62,7 @@ onMounted(() => {
           class="text-black px-3 py-1"
           v-for="(item, i) in selects"
           :key="i"
-          @click="sendSelect(item)"
+          @click="select(item)"
         >
           {{ item.label }}
         </li>

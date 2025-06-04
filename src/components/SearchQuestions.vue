@@ -34,6 +34,8 @@ function debounce<T extends (...args: any[]) => void>(fn: T, delay: number) {
 }
 
 const fetchQuestions = async () => {
+  questions.value = null;
+
   const query = new URLSearchParams({
     ...route.query,
     limit: "3",
