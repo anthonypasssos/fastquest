@@ -2,9 +2,10 @@
 import QuestionsNav from '@/components/QuestionsNav.vue'
 import type { DetailQuestion } from '@/models/DetailQuestion.ts';
 import { ref, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute();
+const router = useRouter();
 
 interface Pagination {
   current_page: number
@@ -58,7 +59,7 @@ const fetchQuestions = async () => {
   }
 }
 
-const debouncedFetch = debounce(fetchQuestions, 500)
+const debouncedFetch = debounce(fetchQuestions, 300)
 
 onMounted(fetchQuestions);
 watch(() => route.fullPath, () => {
@@ -73,6 +74,7 @@ watch(() => route.fullPath, () => {
         v-for="question in questions.data"
         :key="question.id"
         class="classic-box flex items-center max-h-1/3 h-1/3 w-full overflow-hidden pr-5 rounded-2xl hover:cursor-pointer"
+        @click="() => router.push('/question/' + question.id)"
       >
         <ul class="bg-header text-white flex flex-col justify-around h-full w-2/5 p-5">
           <li>Criador: {{ question.user?.name ?? 'Indefinido' }}</li>
@@ -80,16 +82,15 @@ watch(() => route.fullPath, () => {
           <li>Data: {{ question.source?.Metadata.year ?? question.created_at.slice(0, 4) }}</li>
           <li>Disciplina: {{ question.subject?.Name ?? 'Indefinido' }}</li>
         </ul>
-        <router-link
-          :to="'/question/' + question.id"
+        <p
           class="text-black h-full w-full p-4 text-lg text-ellipsis break-words line-clamp-5"
         >
           {{ question.statement }}
-        </router-link>
+        </p>
       </li>
     </ul>
 
-    <div v-else class="h-full w-full flex justify-center items-center flex-col">
+    <div v-else class="h-full w-full flex justify-center items-center flex-col text-black">
       <p>Carregando questões...</p>
     </div>
 
