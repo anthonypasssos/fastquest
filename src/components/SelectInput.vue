@@ -19,7 +19,7 @@ const isOpen = ref<boolean>(false);
 const selected = ref<Select>({label: "", value: ""});
 
 const openSelects = () => {
-  isOpen.value = !isOpen.value
+  isOpen.value = !isOpen.value;
 }
 
 const emit = defineEmits<{(e: 'select', item: Select): void}>();
@@ -30,6 +30,16 @@ const select = (item: Select) => {
   emit('select', item);
 }
 
+const root = ref<HTMLElement | null>(null)
+
+function handleClickOutside(event: MouseEvent) {
+  if (!root.value) return
+
+  if (!root.value.contains(event.target as Node)) {
+    isOpen.value = false;
+  }
+}
+
 onMounted(() => {
   const encontrado = props.selects.find(item => item.value === props.selectedValue);
   selected.value = encontrado ?? { label: props.placeholder, value: "" };
@@ -38,10 +48,18 @@ onMounted(() => {
 watch(() => props.selectedValue, (newValue: string) => {
   selected.value = props.selects.find(item => item.value === newValue) ?? {label: props.placeholder, value: ""};
 })
+
+watch(isOpen, (open) => {
+  if (open) {
+    document.addEventListener('click', handleClickOutside);
+  } else {
+    document.removeEventListener('click', handleClickOutside);
+  }
+});
 </script>
 
 <template>
-  <div class="w-11/12 hover:cursor-pointer select-none relative">
+  <div ref="root" class="w-11/12 hover:cursor-pointer select-none relative">
       <div
       :class="[
           'overflow-hidden pl-3 w-full flex justify-between items-center classic-box',
@@ -67,7 +85,7 @@ watch(() => props.selectedValue, (newValue: string) => {
           {{ item.label }}
         </li>
       </ul>
-    </div>
+  </div>
 </template>
 
 <style scoped>
