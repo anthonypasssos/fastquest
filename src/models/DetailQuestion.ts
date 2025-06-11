@@ -4,6 +4,7 @@ import type { User } from "./User.ts";
 
 export interface DetailQuestion {
   ID: number,
+  id?: number,
   created_at: string,
   updated_at: string,
   statement: string,

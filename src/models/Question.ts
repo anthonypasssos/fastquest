@@ -1,5 +1,6 @@
 export interface Question {
   ID: number
+  id?: number
   CreatedAt: string
   UpdatedAt: string
   Statement: string
@@ -29,5 +30,5 @@ export interface Source {
   ID: number,
   Name: string,
   Type: string,
-  Metadata: Record<string, any>
+  Metadata: Record<string, string | number>
 }

@@ -49,7 +49,7 @@ watch(() => props.selectedValue, (newValue: string) => {
       ]"
       @click="openSelects"
       >
-        <p :class="selected?.label === props.placeholder ?  'ph-color' : 'text-black'">{{ selected?.label }}</p>
+        <p :class="['mt-0.5', selected?.label === props.placeholder ?  'ph-color' : 'text-black']">{{ selected?.label }}</p>
         <span class="bg-main h-8 p-1.5">
           <img :class="['h-full', isOpen ? 'rotate-180' : '']" src="/public/imgs/arrow.png" alt="">
         </span>
