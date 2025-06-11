@@ -94,7 +94,7 @@ watch(() => route.fullPath, () => {
       <p>Carregando questões...</p>
     </div>
 
-    <QuestionsNav :pagination="questions?.pagination ?? {current_page: 1, last_page: 1, per_page: 3, total: 1}" v-if="questions?.pagination.total != 1"/>
+    <QuestionsNav :pagination="questions?.pagination!" v-if="questions?.pagination.total != 1"/>
   </div>
 </template>
 
