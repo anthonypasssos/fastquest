@@ -8,7 +8,7 @@
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/search">Questões</router-link></li>
         <li><router-link to="/">Pasta</router-link></li>
-        <li><router-link to="/">Criar</router-link></li>
+        <li><router-link to="/create">Criar</router-link></li>
       </ul>
     </nav>
   </header>

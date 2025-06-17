@@ -23,6 +23,18 @@ const router = createRouter({
       component: () => import('../views/QuestionView.vue'),
       props: true
     },
+    {
+      path: '/list/:id',
+      name: 'list',
+      component: () => import('../views/ListView.vue'),
+      props: true
+    },
+    {
+      path: '/create',
+      name: 'create',
+      component: () => import('../views/CreateView.vue'),
+      props: true
+    },
   ],
 })
 

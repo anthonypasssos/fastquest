@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import ListItem from '@/components/ListItem.vue';
+import SearchBar from '@/components/SearchBar.vue';
+import ActionBtns from '@/components/ActionBtns.vue';
 
 </script>
 
 <template>
   <main>
+    <header class="flex w-full justify-between col-span-3 py-2">
+      <SearchBar @input="setStatement" />
+      <ActionBtns />
+    </header>
     <div class="main-content">
       <section class="main-section">
         <img src="/public/imgs/home/img_1.png" alt="">
@@ -33,11 +39,10 @@ import ListItem from '@/components/ListItem.vue';
 main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 30vh;
+  grid-template-rows: 10vh 1fr 30vh;
 
-  height: 92vh;
+  height: 100vh;
   width: 100%;
-  padding: 3vh 0;
 }
 
 .main-content {
