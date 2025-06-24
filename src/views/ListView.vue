@@ -4,12 +4,12 @@ import ActionBtns from '@/components/ActionBtns.vue';
 </script>
 
 <template>
-    <main class="w-full h-full overflow-y-scroll gap-5 flex flex-col">
-        <header class="h-[8vh] flex items-center gap-4">
-            <button class="bg-main flex p-1 rounded-xl h-4/6 aspect-square hover:cursor-pointer">
-                <img class="h-full rotate-90" src="/public/imgs/arrow.png" alt="">
+    <main class="w-full h-min min-h-screen overflow-y-scroll gap-7 flex flex-col px-[3vw]">
+        <header class="flex h-[30vh] items-center gap-4 mt-6">
+            <button class="bg-main flex items-center justify-center p-1 rounded-xl h-4/6 aspect-square hover:cursor-pointer">
+                <img class="h-5/6 rotate-90" src="/public/imgs/arrow.png" alt="">
             </button>
-            <h1 class="text-black text-3xl leading-none align-middle p-0 m-0 mt-1.5 whitespace-nowrap">Questões administrativas</h1>
+            <h1 class="text-black text-2xl leading-none align-middle p-0 m-0 mt-1.5 whitespace-nowrap">Questões administrativas</h1>
             <img class="h-1/3 hover:cursor-pointer" src="/public/imgs/save.svg" alt="">
 
             <ActionBtns />
@@ -39,7 +39,7 @@ import ActionBtns from '@/components/ActionBtns.vue';
                 </p>
             </li>
         </ul>
-        <button class="absolute right-8 bottom-8 text-white px-10 py-3 text-2xl rounded-2xl hover:cursor-pointer">Responder</button>
+        <button class="absolute right-8 bottom-8 text-white px-10 py-3 text-2xl rounded-2xl hover:cursor-pointer res-btn">Responder</button>
     </main>
 </template>
 
@@ -64,7 +64,7 @@ import ActionBtns from '@/components/ActionBtns.vue';
         filter: drop-shadow(0px 4px 4px #b0b0b0);
     }
 
-    button {
+    .res-btn {
         background: linear-gradient(180deg, #540D1B, #AA4243);
     }
 </style>

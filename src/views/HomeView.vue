@@ -6,7 +6,7 @@ import ActionBtns from '@/components/ActionBtns.vue';
 </script>
 
 <template>
-  <main>
+  <main class="px-[3vw]">
     <header class="flex w-full justify-between col-span-3 py-2">
       <SearchBar @input="setStatement" />
       <ActionBtns />

@@ -54,7 +54,7 @@ watch(() => route.params.id, (newId) => {
 </script>
 
 <template>
-  <main class="h-screen w-full overflow-visible">
+  <main class="h-screen w-full overflow-visible px-[3vw]">
     <header class="w-full h-full flex items-center justify-between">
       <div class="flex gap-3 h-full w-fit items-center">
         <h1 class="text-black text-3xl leading-none align-middle p-0 m-0 inline mt-1.5">Questão #{{ question?.id }}</h1>

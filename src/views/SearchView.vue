@@ -35,7 +35,7 @@ onMounted(() => {
 
 
 <template>
-  <main class="grid gap-4 h-screen w-full">
+  <main class="grid gap-4 h-screen w-full px-[3vw] py-[3vh]">
     <SearchBar @input="setStatement" />
     <ActionBtns />
     <SearchQuestions />
@@ -48,6 +48,5 @@ main {
   display: grid;
   grid-template-columns: 3.5fr 1fr;
   grid-template-rows: 9vh auto;
-  padding: 3vh 0;
 }
 </style>
