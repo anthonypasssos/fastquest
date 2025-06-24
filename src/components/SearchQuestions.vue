@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import QuestionsNav from '@/components/QuestionsNav.vue'
+import { API_BASE_URL } from '@/config/api';
 import type { DetailQuestion } from '@/models/DetailQuestion.ts';
 import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -44,7 +45,7 @@ const fetchQuestions = async () => {
   });
 
   try {
-    const res = await fetch(`https://fastquest-backend-production.up.railway.app/questions?${query}`)
+    const res = await fetch(`${API_BASE_URL}/questions?${query}`)
     const data = await res.json() as QuestionResponse
     console.log(data);
 

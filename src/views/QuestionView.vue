@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import ListItem from '@/components/ListItem.vue';
 import ActionBtns from '@/components/ActionBtns.vue';
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import type { DetailQuestion } from '@/models/DetailQuestion.ts';
 import CopyBtn from '@/components/CopyBtn.vue';
+import { API_BASE_URL } from '@/config/api';
 
 const route = useRoute()
 const question = ref<DetailQuestion | null>(null)
@@ -22,7 +22,7 @@ const fetchQuestion = async (id: string | number) => {
   error.value = null
 
   try {
-    const res = await fetch(`https://fastquest-backend-production.up.railway.app/question/${id}?detail=full`)
+    const res = await fetch(`${API_BASE_URL}/question/${id}?detail=full`)
     if (!res.ok) throw new Error(`Erro ao buscar questão: ${res.status}`)
     const data: DetailQuestion = await res.json()
     question.value = data

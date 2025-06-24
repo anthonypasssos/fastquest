@@ -3,6 +3,7 @@ import SelectInput from '@/components/SelectInput.vue'
 import MultSelect from '@/components/MultSelect.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
+
 const selectValues = {
   order: [
     { label: 'A - Z', value: 'statement asc' },
