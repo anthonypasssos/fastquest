@@ -77,16 +77,6 @@ const fetchQuestion = async (id: string | number) => {
   }
 }
 
-const questionText = () => {
-  let text = question.value?.statement + "\n\n";
-
-  for (const value of question.value?.answers ?? []) {
-    text += value.Text + "\n"
-  }
-
-  return text
-}
-
 const userAnswers = ref<Record<number, number | null>>({});
 
 const initializeAnswers = () => {
@@ -153,7 +143,6 @@ watch(() => route.params.id, async (newId) => {
       <div class="flex gap-3 h-full w-fit items-center">
         <h1 class="text-black text-2xl leading-none align-middle p-0 m-0 inline mt-1.5">{{ list?.name ?? 'Carregando...' }}</h1>
         <img class="h-1/3 hover:cursor-pointer" src="/public/imgs/save.svg" alt="">
-        <CopyBtn v-if="question" :text="questionText()"/>
       </div>
       <!-- <ul class="flex">
         <li v-for="n in 5" :key="n">
@@ -178,7 +167,8 @@ watch(() => route.params.id, async (newId) => {
       <ul class="flex flex-col gap-5">
         <li
           @click="selectAnswer(currentQuestionId, answer.ID)"
-          class="flex items-center gap-3 classic-box rounded-3xl p-3 relative" v-for="(answer, i) in question?.answers" :key="answer.ID">
+          class="flex items-center gap-3 classic-box rounded-3xl p-3 relative hover:cursor-pointer"
+          v-for="(answer, i) in question?.answers" :key="answer.ID">
           <span
             :class="[
               'rounded-xl leading-0.5 align-middle h-10 aspect-square flex justify-center items-center text-xl pt-1.5',

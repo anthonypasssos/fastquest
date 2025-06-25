@@ -4,12 +4,13 @@ import { API_BASE_URL } from '@/config/api';
 import type { List } from '@/models/List';
 import type { Question } from '@/models/Question';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
-const route = useRoute()
-const list = ref<List | null>(null)
-const loading = ref(true)
-const error = ref<string | null>(null)
+const route = useRoute();
+const router = useRouter();
+const list = ref<List | null>(null);
+const loading = ref(true);
+const error = ref<string | null>(null);
 
 const fetchList = async (id: string | number) => {
   loading.value = true
@@ -55,7 +56,9 @@ onMounted(() => {
 <template>
     <main class="w-full min-h-screen overflow-y-scroll gap-7 flex flex-col px-[3vw]">
         <header class="flex h-[9vh] items-center gap-4 mt-6">
-            <button class="bg-main flex items-center justify-center p-1 rounded-xl h-4/6 aspect-square hover:cursor-pointer">
+            <button
+              @click="() => router.replace('/search-lists')"
+              class="bg-main flex items-center justify-center p-1 rounded-xl h-4/6 aspect-square hover:cursor-pointer">
                 <img class="h-5/6 rotate-90" src="/public/imgs/arrow.png" alt="">
             </button>
             <h1 class="text-black text-2xl leading-none align-middle p-0 m-0 mt-1.5 whitespace-nowrap">{{ list?.name }}</h1>
@@ -88,7 +91,11 @@ onMounted(() => {
                 </p>
             </li>
         </ul>
-        <button class="absolute right-8 bottom-8 text-white px-10 py-3 text-2xl rounded-2xl hover:cursor-pointer res-btn">Responder</button>
+        <button
+          @click="() => router.push(`/list/${list!.id}/answering`)"
+          class="absolute right-8 bottom-8 text-white px-10 py-3 text-2xl rounded-2xl hover:cursor-pointer res-btn">
+            Responder
+        </button>
     </main>
 </template>
 

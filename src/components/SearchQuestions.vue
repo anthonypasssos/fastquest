@@ -3,7 +3,7 @@ import QuestionsNav from '@/components/QuestionsNav.vue'
 import { API_BASE_URL } from '@/config/api';
 import type { DetailQuestion } from '@/models/DetailQuestion.ts';
 import type { NewList } from '@/models/NewList';
-import { ref, onMounted, watch, onUnmounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute();
@@ -72,6 +72,7 @@ const addTolist = ref<boolean>(false);
 const newListData = ref<NewList>({
   name: "",
   type: "list",
+  desc: "",
   is_private: false,
   user_id: 1,
   questions: []

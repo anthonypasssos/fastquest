@@ -25,6 +25,10 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 
 async function fetchQuestions() {
+  if (newListData.value.questions.length === 0) {
+    questions.value = [];
+    return;
+  }
   loading.value = true
   error.value = null
 
@@ -78,6 +82,16 @@ async function createQuestionSet() {
     error.value = err.message
   } finally {
     isLoading.value = false
+    Object.assign(newListData.value, {
+        name: "",
+        type: "list",
+        desc: "",
+        is_private: false,
+        user_id: 1,
+        questions: []
+    });
+    localStorage.removeItem('newListData');
+    questions.value = []
   }
 }
 
@@ -106,7 +120,7 @@ onUnmounted(() => {
             <img class="h-1/3 hover:cursor-pointer" src="/public/imgs/save.svg" alt="">
             <ActionBtns />
         </header>
-        <div class="flex justify-between min-h-[0]">
+        <div class="flex justify-between min-h-[0] w-full">
           <section class="w-8/12 classic-box-dark min-h-[80vh] rounded-2xl p-6">
             <div class="flex items-center justify-center h-10">
                 <input v-model="newListData.name" class="h-full w-full text-lg p-3 rounded-xl mr-9 shadow text-black" type="text" placeholder="Adicione um nome para sua lista..." />
@@ -123,16 +137,16 @@ onUnmounted(() => {
                     <p class="font-thin text-lg">{{ question.Statement }}</p>
                 </li>
             </ul>
-        </section>
-        <section class="w-3/12 h-[84vh] flex flex-col justify-between flex-[0_0_auto]">
-          <div class="classic-box-dark h-full rounded-2xl flex flex-col p-6">
-            <h2 class="text-black text-xl">Informações</h2>
-            <textarea v-model="newListData.desc" class="text-black classic-box rounded-xl h-2/6 p-2" placeholder="Descrição da lista..." id=""></textarea>
-          </div>
-          <button
-            class="bg-button w-full h-14 rounded-2xl mt-6 hover:cursor-pointer text-white text-xl"
-            @click="createQuestionSet">Criar</button>
-        </section>
+          </section>
+          <section class="w-3/12 h-[84vh] flex flex-col justify-between flex-[0_0_auto]">
+            <div class="classic-box-dark h-full rounded-2xl flex flex-col p-6">
+              <h2 class="text-black text-xl">Informações</h2>
+              <textarea v-model="newListData.desc" class="text-black classic-box rounded-xl h-2/6 p-2" placeholder="Descrição da lista..." id=""></textarea>
+            </div>
+            <button
+              class="bg-button w-full h-14 rounded-2xl mt-6 hover:cursor-pointer text-white text-xl"
+              @click="createQuestionSet">Criar</button>
+          </section>
         </div>
     </main>
 </template>
