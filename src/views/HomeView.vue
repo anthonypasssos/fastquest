@@ -6,12 +6,12 @@ import ActionBtns from '@/components/ActionBtns.vue';
 </script>
 
 <template>
-  <main class="px-[3vw]">
-    <header class="flex w-full justify-between col-span-3 py-2">
-      <SearchBar @input="setStatement" />
+  <main class="px-[3vw] py-3 flex flex-col justify-between h-screen">
+    <header class="flex w-full justify-between h-[9vh]">
+      <SearchBar/>
       <ActionBtns />
     </header>
-    <div class="main-content">
+    <div class="main-content h-full">
       <section class="main-section">
         <img src="/public/imgs/home/img_1.png" alt="">
         <div>
@@ -27,7 +27,8 @@ import ActionBtns from '@/components/ActionBtns.vue';
         <img src="/public/imgs/home/img_2.png" alt="">
       </section>
     </div>
-    <ul>
+    <ul class="flex justify-between h-[30vh]">
+      <li><ListItem/></li>
       <li><ListItem/></li>
       <li><ListItem/></li>
       <li><ListItem/></li>
@@ -36,19 +37,11 @@ import ActionBtns from '@/components/ActionBtns.vue';
 </template>
 
 <style scoped>
-main {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 10vh 1fr 30vh;
-
-  height: 100vh;
-  width: 100%;
-}
 
 .main-content {
   background-color: #F4F4F4;
   grid-column: span 3;
-  grid-row: span 2 ;
+  grid-row: 2 ;
 
   border: .5px solid #979494;
   border-radius: 30px;
@@ -130,11 +123,4 @@ section {
 
   height: 100%;
 }
-
-ul {
-  display: flex;
-  justify-content: space-around;
-  grid-column: 1 / -1;
-}
-
 </style>

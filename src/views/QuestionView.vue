@@ -54,10 +54,10 @@ watch(() => route.params.id, (newId) => {
 </script>
 
 <template>
-  <main class="h-screen w-full overflow-visible px-[3vw]">
+  <main class="h-screen w-full overflow-visible px-[3vw] py-3">
     <header class="w-full h-full flex items-center justify-between">
       <div class="flex gap-3 h-full w-fit items-center">
-        <h1 class="text-black text-3xl leading-none align-middle p-0 m-0 inline mt-1.5">Questão #{{ question?.id }}</h1>
+        <h1 class="text-black text-2  xl leading-none align-middle p-0 m-0 inline mt-1.5">Questão #{{ question?.id }}</h1>
         <img class="h-1/3 hover:cursor-pointer" src="/public/imgs/save.svg" alt="">
         <CopyBtn v-if="question" :text="questionText()"/>
       </div>
@@ -120,7 +120,6 @@ main {
   grid-template-rows: 9vh auto;
   gap: 4%;
 
-  padding: 3vh 0;
 }
 
 .question-box {

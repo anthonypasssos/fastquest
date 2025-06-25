@@ -92,7 +92,7 @@ watch(() => route.fullPath, syncFiltersFromRoute);
       <input class="h-fit" type="checkbox" id="html" name="fav_language" value="HTML">
       <label for="html" class="text-black font-light">Incluir apenas questões <b>sem</b> listas</label>
     </div>
-    <button @click="resetQueries" class="bg-main-h text-white w-11/12 rounded-3xl text-lg p-1">Resetar Filtros</button>
+    <button @click="resetQueries" class="bg-main-h text-white w-11/12 rounded-3xl text-lg p-1 hover:cursor-pointer">Resetar Filtros</button>
   </div>
 </template>
 

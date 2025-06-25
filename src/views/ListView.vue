@@ -4,8 +4,8 @@ import ActionBtns from '@/components/ActionBtns.vue';
 </script>
 
 <template>
-    <main class="w-full h-min min-h-screen overflow-y-scroll gap-7 flex flex-col px-[3vw]">
-        <header class="flex h-[30vh] items-center gap-4 mt-6">
+    <main class="w-full min-h-screen overflow-y-scroll gap-7 flex flex-col px-[3vw]">
+        <header class="flex h-[9vh] items-center gap-4 mt-6">
             <button class="bg-main flex items-center justify-center p-1 rounded-xl h-4/6 aspect-square hover:cursor-pointer">
                 <img class="h-5/6 rotate-90" src="/public/imgs/arrow.png" alt="">
             </button>
@@ -14,7 +14,7 @@ import ActionBtns from '@/components/ActionBtns.vue';
 
             <ActionBtns />
         </header>
-        <section class="flex justify-between h-[30vh]">
+        <section class="flex justify-between h-[35vh]">
             <div class="flex flex-col justify-center items-center w-2/6 aspect-square">
                 <img src="/public/imgs/List/list_icon_1.png" alt="" class="h-[100%] object-contain">
             </div>
@@ -26,12 +26,12 @@ import ActionBtns from '@/components/ActionBtns.vue';
                     <li>Disciplina: Extra Curricular</li>
                 </ul>
                 <span class="block w-[1px] h-5/6"></span>
-                <p class="text-black font-light text-lg">Esta lista contém uma série de questões fundamentais e de aprofundamento sobre o direito criminal, abordando desde conceitos básicos até tópicos mais complexos relacionados à legislação penal. As perguntas cobrem temas essenciais como os tipos de crime, princípios do direito penal, a aplicação das penas, o processo criminal, a responsabilidade penal e os direitos dos acusados.</p>
+                <p class="text-black font-light text-lg h-full overflow-y-scroll">Esta lista contém uma série de questões fundamentais e de aprofundamento sobre o direito criminal, abordando desde conceitos básicos até tópicos mais complexos relacionados à legislação penal. As perguntas cobrem temas essenciais como os tipos de crime, princípios do direito penal, a aplicação das penas, o processo criminal, a responsabilidade penal e os direitos dos acusados.</p>
             </div>
         </section>
         <ul class="w-full rounded-2xl text-lg p-10 questions flex flex-col gap-3">
-            <li v-for="n in 10" class="flex text-black h-[15vh] overflow-hidden rounded-2xl question">
-                <div class="h-full w-3/12 flex justify-center items-center text-white">
+            <li v-for="n in 10" class="flex text-black overflow-hidden rounded-2xl question" :key="n">
+                <div class="h-full w-5/12 flex justify-center items-center text-white">
                     <p>Questão #{{ n }}</p>
                 </div>
                 <p class="font-light my-auto px-5 py-5">

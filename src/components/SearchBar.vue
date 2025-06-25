@@ -1,19 +1,26 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref} from 'vue'
 import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
+
 
 const inputText = ref<string>('')
+const route = useRoute();
+const router = useRouter();
 
 // Permitir que o componente emita o evento 'input'
-const emit = defineEmits<{
-  (e: 'input', value: string): void
-}>()
+const setStatement = (inputText: string) => {
+  const newQuery = {...route.query};
 
-const handleInput = () => {
-  emit('input', inputText.value)
+  if (inputText === "") {
+    delete newQuery["statement"];
+  } else {
+    newQuery.statement = inputText;
+  }
+
+  router.push({query: newQuery})
 }
 
-const route = useRoute();
 
 onMounted(() => {
   inputText.value = (route.query.statement as string) ?? ""
@@ -25,7 +32,7 @@ onMounted(() => {
       <input
         class="text-ph text-black" type="text" placeholder="Pesquise pastas e perguntas"
         v-model="inputText"
-        @input="handleInput"
+        @input="setStatement(inputText)"
         >
       <button>
         <router-link to="/search" class="flex justify-center"><img src="/public/imgs/header/search_icon.svg" alt=""></router-link>

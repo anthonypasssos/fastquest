@@ -9,18 +9,6 @@ import { onMounted} from 'vue'
 const route = useRoute()
 const router = useRouter()
 
-const setStatement = (inputText: string) => {
-  const newQuery = {...route.query};
-
-  if (inputText === "") {
-    delete newQuery["statement"];
-  } else {
-    newQuery.statement = inputText;
-  }
-
-  router.push({query: newQuery})
-}
-
 onMounted(() => {
   if (!route.query.page) {
     router.push({
@@ -35,8 +23,8 @@ onMounted(() => {
 
 
 <template>
-  <main class="grid gap-4 h-screen w-full px-[3vw] py-[3vh]">
-    <SearchBar @input="setStatement" />
+  <main class="grid gap-4 h-screen w-full px-[3vw] py-3">
+    <SearchBar/>
     <ActionBtns />
     <SearchQuestions />
     <TheFilter />
