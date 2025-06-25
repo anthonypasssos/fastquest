@@ -1,6 +1,36 @@
 <script setup lang="ts">
 import ActionBtns from '@/components/ActionBtns.vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+import type { NewList } from '../models/NewList';
+import { useRouter } from 'vue-router';
 
+
+const newListData = ref<NewList>({
+  name: "",
+  type: "list",
+  is_private: false,
+  user_id: 1,
+  questions: []
+})
+
+const router = useRouter();
+
+const goToAddToList = () => {
+  router.push('/search/add-to-list');
+};
+
+onMounted(() => {
+  const stored = localStorage.getItem('newListData');
+
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    Object.assign(newListData.value, parsed);
+  };
+})
+
+onUnmounted(() => {
+  localStorage.setItem("newListData", JSON.stringify(newListData.value));
+})
 </script>
 
 <template>
@@ -13,27 +43,37 @@ import ActionBtns from '@/components/ActionBtns.vue';
             <img class="h-1/3 hover:cursor-pointer" src="/public/imgs/save.svg" alt="">
             <ActionBtns />
         </header>
-        <section class="w-8/12 classic-box-dark min-h-[80vh] rounded-2xl p-6">
+        <div class="flex justify-between min-h-[0]">
+          <section class="w-8/12 classic-box-dark min-h-[80vh] rounded-2xl p-6">
             <div class="flex items-center justify-center h-10">
-                <input class="h-full w-full text-lg p-3 rounded-xl mr-9 shadow" type="text" placeholder="Adicione um nome para sua lista..." />
-                <div class="flex items-center h-full p-2 aspect-square bg-main rounded-xl hover:cursor-pointer shadow">
-                    <image src="/public/imgs/plus.png" alt="Adicionar questão" class="h-full w-full"/>
-                </div>
+                <input v-model="newListData.name" class="h-full w-full text-lg p-3 rounded-xl mr-9 shadow text-black" type="text" placeholder="Adicione um nome para sua lista..." />
+                <button @click.stop="goToAddToList" class="flex items-center h-full p-2 aspect-square bg-main rounded-xl hover:cursor-pointer shadow">
+                    <img src="/public/imgs/plus.png" alt="Adicionar questão" class="h-full w-full"/>
+                </button>
             </div>
             <ul>
                 <li class="flex blue-gradient text-white px-2 py-3 rounded-xl my-5">
                     <h2 class="text-lg px-4">1</h2>
                     <p class="font-thin text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, ea numquam enim assumenda, sint atque explicabo, error mollitia illo autem dignissimos maiores provident similique voluptate doloribus maxime porro! Soluta a laborum assumenda, sunt repellat laboriosam odio amet provident aperiam eveniet?</p>
                 </li>
+                <li class="flex blue-gradient text-white px-2 py-3 rounded-xl my-5">
+                    <h2 class="text-lg px-4">1</h2>
+                    <p class="font-thin text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, ea numquam enim assumenda, sint atque explicabo, error mollitia illo autem dignissimos maiores provident similique voluptate doloribus maxime porro! Soluta a laborum assumenda, sunt repellat laboriosam odio amet provident aperiam eveniet?</p>
+                </li>
+                <li class="flex blue-gradient text-white px-2 py-3 rounded-xl my-5">
+                    <h2 class="text-lg px-4">1</h2>
+                    <p class="font-thin text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, ea numquam enim assumenda, sint atque explicabo, error mollitia illo autem dignissimos maiores provident similique voluptate doloribus maxime porro! Soluta a laborum assumenda, sunt repellat laboriosam odio amet provident aperiam eveniet?</p>
+                </li>
             </ul>
         </section>
-        <section class="w-3/12 h-[80vh] flex flex-col justify-between">
+        <section class="w-3/12 h-[86vh] flex flex-col justify-between flex-[0_0_auto]">
           <div class="classic-box-dark h-full rounded-2xl flex flex-col p-6">
             <h2 class="text-black text-xl">Informações</h2>
             <textarea class="classic-box rounded-xl h-2/6 p-2" placeholder="Descrição da lista..." id=""></textarea>
           </div>
           <button class="bg-button w-full h-14 rounded-2xl mt-6 hover:cursor-pointer text-white text-xl">Criar</button>
         </section>
+        </div>
     </main>
 </template>
 

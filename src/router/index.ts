@@ -12,9 +12,11 @@ const router = createRouter({
     {
       path: '/search',
       name: 'search',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/SearchView.vue'),
+    },
+    {
+      path: '/search/add-to-list',
+      name: 'searchadd',
       component: () => import('../views/SearchView.vue'),
     },
     {
@@ -30,7 +32,7 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/create',
+      path: '/create-list',
       name: 'create',
       component: () => import('../views/CreateListView.vue'),
       props: true

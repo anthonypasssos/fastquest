@@ -57,15 +57,15 @@ watch(() => route.params.id, (newId) => {
   <main class="h-screen w-full overflow-visible px-[3vw] py-3">
     <header class="w-full h-full flex items-center justify-between">
       <div class="flex gap-3 h-full w-fit items-center">
-        <h1 class="text-black text-2  xl leading-none align-middle p-0 m-0 inline mt-1.5">Questão #{{ question?.id }}</h1>
+        <h1 class="text-black text-2xl leading-none align-middle p-0 m-0 inline mt-1.5">Questão #{{ question?.id }}</h1>
         <img class="h-1/3 hover:cursor-pointer" src="/public/imgs/save.svg" alt="">
         <CopyBtn v-if="question" :text="questionText()"/>
       </div>
-      <ul class="flex">
+      <!-- <ul class="flex">
         <li v-for="n in 5" :key="n">
           <img src="/public/imgs/star_full.svg" alt="">
         </li>
-      </ul>
+      </ul> -->
     </header>
     <ActionBtns />
     <section class="question-box overflow-y-scroll overflow-x-visible gap-10">
@@ -88,7 +88,7 @@ watch(() => route.params.id, (newId) => {
     <section class="flex flex-col items-center rounded-2xl overflow-hidden">
       <h1 class="bg-main text-white text-center text-xl p-3 w-full">Informações</h1>
       <div class="classic-box h-full w-full rounded-b-2xl">
-        <ul class="text-lg p-5 flex flex-col items-center gap-2 text-black">
+        <ul class="text-base p-5 flex flex-col items-center gap-2 text-black">
           <li class="w-full">Criador: {{ question?.user?.name ?? 'indefinido'}}</li>
           <hr class="border-main w-5/6">
           <li class="w-full">Fonte: {{ question?.source?.Type ?? 'indefinido' }}</li>
@@ -97,17 +97,17 @@ watch(() => route.params.id, (newId) => {
           <hr class="border-main w-5/6">
           <li class="w-full">Disciplina: {{ question?.subject?.Name ?? 'indefinido' }}</li>
           <hr class="border-main w-5/6">
-          <li class="w-full">
+          <!-- <li class="w-full">
             <h2>Assunto: </h2>
             <ul class="w-full h-full flex py-2 gap-2">
               <li class="rounded-xl flex items-center h-fit py-1 px-3 gap-2 bg-topic font-light">
                 <p class="text-white leading-none h-full">{{ question?.topic?.Name ?? 'indefinido' }}</p>
               </li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </div>
-      <button @click="answerSwitch" class="bg-button text-white py-3 m-4 w-full rounded-4xl text-xl hover:cursor-pointer">{{ showCorrect ? 'Esconder' : 'Ver Respostas' }}</button>
+      <button @click="answerSwitch" class="bg-button text-white py-3 m-2 w-full rounded-2xl text-xl hover:cursor-pointer">{{ showCorrect ? 'Esconder' : 'Ver Respostas' }}</button>
     </section>
   </main>
 </template>
