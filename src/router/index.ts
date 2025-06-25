@@ -32,6 +32,12 @@ const router = createRouter({
       props: true
     },
     {
+      path: '/list/:id/answering',
+      name: 'answering',
+      component: () => import('../views/AnsweringList.vue'),
+      props: true
+    },
+    {
       path: '/create-list',
       name: 'create',
       component: () => import('../views/CreateListView.vue'),
