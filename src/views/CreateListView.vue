@@ -3,11 +3,12 @@ import ActionBtns from '@/components/ActionBtns.vue';
 import { onMounted, onUnmounted, ref } from 'vue';
 import type { NewList } from '../models/NewList';
 import { useRouter } from 'vue-router';
-
+import type { Question } from '@/models/Question';
 
 const newListData = ref<NewList>({
   name: "",
   type: "list",
+  desc: "",
   is_private: false,
   user_id: 1,
   questions: []
@@ -19,12 +20,74 @@ const goToAddToList = () => {
   router.push('/search/add-to-list');
 };
 
+const questions = ref<Question[]>([])
+const loading = ref(false)
+const error = ref<string | null>(null)
+
+async function fetchQuestions() {
+  loading.value = true
+  error.value = null
+
+  try {
+    const response = await fetch('http://localhost:8080/questions/array', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        IDs: newListData.value.questions
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    questions.value = data
+  } catch (err: any) {
+    error.value = err.message
+  } finally {
+    loading.value = false
+  }
+}
+
+const isLoading = ref(false)
+const response = ref<any>(null)
+
+async function createQuestionSet() {
+  isLoading.value = true
+  error.value = null
+
+  try {
+    const res = await fetch('http://localhost:8080/question-set', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newListData.value)
+    })
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`)
+    }
+
+    const data = await res.json()
+    response.value = data
+  } catch (err: any) {
+    error.value = err.message
+  } finally {
+    isLoading.value = false
+  }
+}
+
 onMounted(() => {
   const stored = localStorage.getItem('newListData');
 
   if (stored) {
     const parsed = JSON.parse(stored);
     Object.assign(newListData.value, parsed);
+    fetchQuestions();
   };
 })
 
@@ -35,7 +98,7 @@ onUnmounted(() => {
 
 <template>
     <main class="px-[3vw] py-3 h-screen overflow-y-scroll flex flex-wrap justify-between">
-        <header class="flex h-[9vh] w-full items-center gap-4">
+        <header class="flex h-[9vh] w-full items-center gap-4 mb-3">
             <button class="bg-main flex items-center justify-center p-1 rounded-xl h-4/6 aspect-square hover:cursor-pointer">
                 <img class="h-5/6 rotate-90" src="/public/imgs/arrow.png" alt="">
             </button>
@@ -52,26 +115,23 @@ onUnmounted(() => {
                 </button>
             </div>
             <ul>
-                <li class="flex blue-gradient text-white px-2 py-3 rounded-xl my-5">
-                    <h2 class="text-lg px-4">1</h2>
-                    <p class="font-thin text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, ea numquam enim assumenda, sint atque explicabo, error mollitia illo autem dignissimos maiores provident similique voluptate doloribus maxime porro! Soluta a laborum assumenda, sunt repellat laboriosam odio amet provident aperiam eveniet?</p>
-                </li>
-                <li class="flex blue-gradient text-white px-2 py-3 rounded-xl my-5">
-                    <h2 class="text-lg px-4">1</h2>
-                    <p class="font-thin text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, ea numquam enim assumenda, sint atque explicabo, error mollitia illo autem dignissimos maiores provident similique voluptate doloribus maxime porro! Soluta a laborum assumenda, sunt repellat laboriosam odio amet provident aperiam eveniet?</p>
-                </li>
-                <li class="flex blue-gradient text-white px-2 py-3 rounded-xl my-5">
-                    <h2 class="text-lg px-4">1</h2>
-                    <p class="font-thin text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, ea numquam enim assumenda, sint atque explicabo, error mollitia illo autem dignissimos maiores provident similique voluptate doloribus maxime porro! Soluta a laborum assumenda, sunt repellat laboriosam odio amet provident aperiam eveniet?</p>
+                <li
+                  v-for="(question, i) in questions"
+                  :key="question.id"
+                  class="flex blue-gradient text-white px-2 py-3 rounded-xl my-5">
+                    <h2 class="text-lg px-4">{{ i + 1 }}</h2>
+                    <p class="font-thin text-lg">{{ question.Statement }}</p>
                 </li>
             </ul>
         </section>
-        <section class="w-3/12 h-[86vh] flex flex-col justify-between flex-[0_0_auto]">
+        <section class="w-3/12 h-[84vh] flex flex-col justify-between flex-[0_0_auto]">
           <div class="classic-box-dark h-full rounded-2xl flex flex-col p-6">
             <h2 class="text-black text-xl">Informações</h2>
-            <textarea class="classic-box rounded-xl h-2/6 p-2" placeholder="Descrição da lista..." id=""></textarea>
+            <textarea v-model="newListData.desc" class="text-black classic-box rounded-xl h-2/6 p-2" placeholder="Descrição da lista..." id=""></textarea>
           </div>
-          <button class="bg-button w-full h-14 rounded-2xl mt-6 hover:cursor-pointer text-white text-xl">Criar</button>
+          <button
+            class="bg-button w-full h-14 rounded-2xl mt-6 hover:cursor-pointer text-white text-xl"
+            @click="createQuestionSet">Criar</button>
         </section>
         </div>
     </main>

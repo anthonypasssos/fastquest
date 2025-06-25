@@ -2,7 +2,8 @@ export interface Question {
   ID: number
   id?: number
   CreatedAt: string
-  UpdatedAt: string
+  UpdatedAt: string | null
+  DeletedAt: string | null
   Statement: string
   SubjectID: number
   UserID: number

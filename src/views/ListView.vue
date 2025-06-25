@@ -1,5 +1,54 @@
 <script setup lang="ts">
 import ActionBtns from '@/components/ActionBtns.vue';
+import { API_BASE_URL } from '@/config/api';
+import type { List } from '@/models/List';
+import type { Question } from '@/models/Question';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
+const list = ref<List | null>(null)
+const loading = ref(true)
+const error = ref<string | null>(null)
+
+const fetchList = async (id: string | number) => {
+  loading.value = true
+  error.value = null
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/question-set/${id}`)
+    if (!res.ok) throw new Error(`Erro ao buscar questão: ${res.status}`)
+    const data: List = await res.json()
+    list.value = data
+  } catch (err: any) {
+    error.value = err.message
+  } finally {
+    loading.value = false
+  }
+}
+
+const questions = ref<Question[] | null>(null)
+
+const fetchQuestions = async (id: string | number) => {
+  loading.value = true
+  error.value = null
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/question-set/${id}/questions`)
+    if (!res.ok) throw new Error(`Erro ao buscar questão: ${res.status}`)
+    const data: Question[] = await res.json()
+    questions.value = data
+  } catch (err: any) {
+    error.value = err.message
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchList(route.params.id as string)
+  fetchQuestions(route.params.id as string)
+})
 
 </script>
 
@@ -9,7 +58,7 @@ import ActionBtns from '@/components/ActionBtns.vue';
             <button class="bg-main flex items-center justify-center p-1 rounded-xl h-4/6 aspect-square hover:cursor-pointer">
                 <img class="h-5/6 rotate-90" src="/public/imgs/arrow.png" alt="">
             </button>
-            <h1 class="text-black text-2xl leading-none align-middle p-0 m-0 mt-1.5 whitespace-nowrap">Questões administrativas</h1>
+            <h1 class="text-black text-2xl leading-none align-middle p-0 m-0 mt-1.5 whitespace-nowrap">{{ list?.name }}</h1>
             <img class="h-1/3 hover:cursor-pointer" src="/public/imgs/save.svg" alt="">
 
             <ActionBtns />
@@ -22,20 +71,20 @@ import ActionBtns from '@/components/ActionBtns.vue';
                 <ul class="text-black text-lg whitespace-nowrap">
                     <li>Criador: Teste</li>
                     <li>Fonte: Alguma ai</li>
-                    <li>Data: 2024</li>
+                    <li>Data: {{ list?.creation_date.slice(0,4) }}</li>
                     <li>Disciplina: Extra Curricular</li>
                 </ul>
                 <span class="block w-[1px] h-5/6"></span>
-                <p class="text-black font-light text-lg h-full overflow-y-scroll">Esta lista contém uma série de questões fundamentais e de aprofundamento sobre o direito criminal, abordando desde conceitos básicos até tópicos mais complexos relacionados à legislação penal. As perguntas cobrem temas essenciais como os tipos de crime, princípios do direito penal, a aplicação das penas, o processo criminal, a responsabilidade penal e os direitos dos acusados.</p>
+                <p class="text-black font-light text-lg h-full overflow-y-auto"> {{ list?.desc }}</p>
             </div>
         </section>
         <ul class="w-full rounded-2xl text-lg p-10 questions flex flex-col gap-3">
-            <li v-for="n in 10" class="flex text-black overflow-hidden rounded-2xl question" :key="n">
-                <div class="h-full w-5/12 flex justify-center items-center text-white">
-                    <p>Questão #{{ n }}</p>
+            <li v-for="(question, i) in questions" class="flex text-black overflow-hidden rounded-2xl question w-full" :key="i">
+                <div class="h-full w-32 flex justify-center items-center text-white shrink-0">
+                    <p>Questão #{{ i }}</p>
                 </div>
-                <p class="font-light my-auto px-5 py-5">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, ratione vel. Facilis, quia ea doloremque temporibus officiis dolor rerum corporis eos atque, facere magnam voluptatem, dolorum asperiores minima nobis blanditiis.
+                <p class="font-light my-auto px-5 py-5 text-wrap">
+                    {{ question.Statement }}
                 </p>
             </li>
         </ul>

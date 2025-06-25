@@ -18,17 +18,25 @@ const setStatement = (inputText: string) => {
     newQuery.statement = inputText;
   }
 
-  router.push({query: newQuery})
+  router.push({query: newQuery});
 }
+
+const addToList = ref(false);
 
 
 onMounted(() => {
   inputText.value = (route.query.statement as string) ?? ""
+  if (route.path === "/search/add-to-list") {
+      addToList.value = true;
+  }
 })
 </script>
 
 <template>
   <div class="input_box">
+      <button v-if="addToList" @click="() => router.replace('/create-list')">
+        <img class="rotate-90" src="/public/imgs/arrow.png" alt="">
+      </button>
       <input
         class="text-ph text-black" type="text" placeholder="Pesquise pastas e perguntas"
         v-model="inputText"
