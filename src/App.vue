@@ -4,18 +4,28 @@ import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
-  <NavBar />
-  <section>
-    <RouterView />
+  <header class="bg-black flex justify-between items-center w-full h-1/6 px-12 py-8">
+    <img class="w-30 h-fit" src="/public/imgs/logo.png" alt="">
+    <ul class="flex text-white text-2xl gap-6">
+      <li>Home</li>
+      <li>Questões</li>
+      <li>Pastas</li>
+      <li>Criar</li>
+    </ul>
+
+  </header>
+  <section class="flex flex-col h-5/6 w-full">
+      <main class="flex-1 bg-red-400"></main>
+      <div class="h-fit w-full bg-black">
+        <p>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
+      </div>
   </section>
 </template>
 
-<style scoped>
-section {
+<style>
+#app {
   display: flex;
-  flex-direction: column;
-
-  width: 100%;
   height: 100vh;
+  flex-direction: column;
 }
 </style>
