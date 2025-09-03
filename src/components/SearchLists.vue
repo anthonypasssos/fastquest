@@ -52,7 +52,7 @@ const fetchLists = async () => {
 
     data.data = data.data.map(q => ({
       ...q,
-      statement: limitChars(q.desc, Math.round(window.innerHeight / 3.5))
+      description: limitChars(q.description.length === 0 ? "Sem descrição" : q.description, Math.round(window.innerHeight / 3.5))
     }))
 
     lists.value = data
@@ -72,7 +72,7 @@ const addTolist = ref<boolean>(false);
 const newListData = ref<NewList>({
   name: "",
   type: "list",
-  desc: "",
+  description: "",
   is_private: false,
   user_id: 1,
   questions: []
@@ -96,14 +96,14 @@ watch(() => route.fullPath, () => {
         class="classic-box flex items-center max-h-1/3 h-1/3 w-full pr-5 rounded-2xl hover:cursor-pointer relative"
         @click="goToList(list.id!)"
       >
-        <ul class="bg-header text-white flex flex-col justify-around h-full w-2/5 p-5 rounded-tl-2xl rounded-bl-2xl">
+        <ul class="bg-header text-white flex flex-col justify-center gap-5 h-full w-2/5 p-5 rounded-tl-2xl rounded-bl-2xl text-lg">
           <li>Nome: {{ list.name ?? 'Indefinido'}}</li>
           <li>Data: {{ list.creation_date.slice(0,4)}}</li>
         </ul>
         <p
           class="text-black h-full w-full p-4 text-lg text-ellipsis break-words line-clamp-5"
         >
-          {{ list.desc }}
+          {{ list.description }}
         </p>
       </li>
     </ul>
